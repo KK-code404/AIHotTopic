@@ -31,7 +31,7 @@ jobs:
         run: pip install --no-cache-dir -r requirements-dev.txt
 
       - name: Run tests
-        run: pytest -q
+        run: python -m pytest -q
 
       - name: Generate and push AI daily report
         env:
