@@ -32,7 +32,7 @@ pipeline:
                     command: |-
                       set -eu
                       pip install --no-cache-dir -r requirements-dev.txt
-                      pytest -q
+                      python -m pytest -q
                       python main.py
                     envVariables:
                       AI_API_KEY: <+secrets.getValue("ai_api_key")>
