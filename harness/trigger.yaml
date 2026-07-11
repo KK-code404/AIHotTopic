@@ -1,0 +1,25 @@
+trigger:
+  name: Daily AI News 09 Beijing
+  identifier: daily_ai_news_09_beijing
+  enabled: true
+  orgIdentifier: <+input>
+  projectIdentifier: <+input>
+  pipelineIdentifier: ai_daily_push
+  source:
+    type: Scheduled
+    spec:
+      type: Cron
+      spec:
+        expression: 0 1 * * *
+        type: UNIX
+  inputYaml: |
+    pipeline:
+      identifier: ai_daily_push
+      properties:
+        ci:
+          codebase:
+            build:
+              type: branch
+              spec:
+                branch: main
+
