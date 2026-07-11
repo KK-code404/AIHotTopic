@@ -1,0 +1,54 @@
+pipeline:
+  name: AI Daily Push
+  identifier: ai_daily_push
+  projectIdentifier: <+input>
+  orgIdentifier: <+input>
+  tags: {}
+  stages:
+    - stage:
+        name: Generate AI Daily
+        identifier: generate_ai_daily
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          caching:
+            enabled: false
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Test Generate and Push
+                  identifier: test_generate_and_push
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: python:3.12-slim
+                    shell: Sh
+                    command: |-
+                      set -eu
+                      pip install --no-cache-dir -r requirements-dev.txt
+                      pytest -q
+                      python main.py
+                    envVariables:
+                      AI_API_KEY: <+secrets.getValue("ai_api_key")>
+                      AI_BASE_URL: <+secrets.getValue("ai_base_url")>
+                      AI_MODEL: <+secrets.getValue("ai_model")>
+                      PUSHPLUS_TOKEN: <+secrets.getValue("pushplus_token")>
+                      PUSHPLUS_CHANNEL: "clawbot"
+                      NEWS_LOOKBACK_HOURS: "48"
+                      MAX_PER_SOURCE: "8"
+                      TOP_N: "7"
+  properties:
+    ci:
+      codebase:
+        connectorRef: <+input>
+        repoName: <+input>
+        build:
+          type: branch
+          spec:
+            branch: main
