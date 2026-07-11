@@ -1,0 +1,24 @@
+[
+  {
+    "name": "OpenAI",
+    "url": "https://openai.com/news/rss.xml"
+  },
+  {
+    "name": "Google AI",
+    "url": "https://blog.google/technology/ai/rss/"
+  },
+  {
+    "name": "Hugging Face",
+    "url": "https://huggingface.co/blog/feed.xml"
+  },
+  {
+    "name": "Salesforce News",
+    "url": "https://www.salesforce.com/news/feed/",
+    "lookback_hours": 168
+  },
+  {
+    "name": "Salesforce Agentforce",
+    "url": "https://www.salesforce.com/blog/category/agentforce/feed/",
+    "lookback_hours": 168
+  }
+]
