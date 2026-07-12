@@ -68,6 +68,12 @@ Trigger 使用 `0 1 * * *`，即 UTC 每天 01:00，对应北京时间每天 09:
 
 Harness YAML 的 `projectIdentifier`、`orgIdentifier`、代码库 `connectorRef` 和 `repoName` 与账户相关，因此保留为运行时输入。若导入 Trigger YAML 时平台要求固定标识符，请在 Harness UI 中用实际值替换 `<+input>`。
 
+## GitHub Actions 自动补发
+
+`.github/workflows/daily.yml` 使用三次云端检查：北京时间 09:07 首次发送，09:27 和 09:47 作为看门狗补发。首次发送成功后会为当天保存 delivery marker，后续检查发现标记后自动跳过；如果任务未触发或中途失败，没有成功标记，下一次检查会重新发送。
+
+该机制确认的是 GitHub 工作流与 PushPlus API 请求成功。微信 ClawBot 的最终送达还要求会话处于激活状态：每 24 小时以及每收到 10 次推送后，需要主动向 ClawBot 发送一条消息。
+
 ## Docker
 
 ```powershell
