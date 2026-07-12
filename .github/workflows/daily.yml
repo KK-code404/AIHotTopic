@@ -2,8 +2,8 @@ name: AI Daily Push
 
 on:
   schedule:
-    # GitHub Actions cron uses UTC. 01:00 UTC = 09:00 Asia/Shanghai.
-    - cron: "0 1 * * *"
+    # Avoid the high-load top of the hour. 01:07 UTC = 09:07 Asia/Shanghai.
+    - cron: "7 1 * * *"
   workflow_dispatch:
 
 concurrency:
