@@ -19,3 +19,5 @@ def test_prompt_contains_mobile_markdown_layout() -> None:
     assert "2026-07-11" in prompt
     assert article.link in prompt
     assert "Salesforce News" in prompt
+    assert "绝对不得超过 2 条" in prompt
+    assert "其余 5 至 6 条" in prompt
