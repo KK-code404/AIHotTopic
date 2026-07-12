@@ -15,7 +15,8 @@ def build_prompt(articles: list[Article], top_n: int, report_date: str) -> str:
 内容规则：
 - 合并重复事件，优先模型发布、产品重大更新、开发者生态、监管政策和重要融资。
 - 排除纯营销、普通教程和缺乏实质内容的文章，不得补充候选数据中没有的事实。
-- 如果候选中存在有实质内容的 Salesforce News 或 Salesforce Agentforce 新闻，优先选入 1 至 2 条；不要为了配额选入纯营销内容。
+- 来源占比是硬约束：整份 7 条日报中，Salesforce News 与 Salesforce Agentforce 合计只能选 1 至 2 条，绝对不得超过 2 条；其余 5 至 6 条必须来自非 Salesforce 的综合 AI 新闻源。
+- Salesforce 候选有实质内容时至少选 1 条；如果没有合格内容可以不选，不要为了配额选入纯营销文章。
 - 标题和摘要使用自然、准确的中文；公司名、产品名和模型名保留官方写法。
 - 链接必须逐字使用候选新闻中的 link，不得修改或杜撰。
 
