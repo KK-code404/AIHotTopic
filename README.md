@@ -56,6 +56,8 @@ pytest -q
 
 新闻源在 `sources.json` 中维护。某个源失败不会阻止其他源继续处理。
 
+默认日报共 7 条，其中 Salesforce News 与 Salesforce Agentforce 合计占 1–2 条，其余 5–6 条来自其他综合 AI 新闻源。
+
 ## Harness 部署
 
 1. 将仓库推送到 GitHub/GitLab，并在 Harness 建立代码仓库 Connector。
