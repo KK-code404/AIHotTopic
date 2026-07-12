@@ -2,8 +2,10 @@ name: AI Daily Push
 
 on:
   schedule:
-    # Avoid the high-load top of the hour. 01:07 UTC = 09:07 Asia/Shanghai.
+    # Primary run and two watchdog retries (Asia/Shanghai 09:07/09:27/09:47).
     - cron: "7 1 * * *"
+    - cron: "27 1 * * *"
+    - cron: "47 1 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -21,19 +23,36 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Calculate report date
+        id: report-date
+        shell: bash
+        run: echo "date=$(TZ=Asia/Shanghai date +%F)" >> "$GITHUB_OUTPUT"
+
+      - name: Check today's delivery marker
+        id: delivery-marker
+        if: github.event_name == 'schedule'
+        uses: actions/cache/restore@v4
+        with:
+          path: .delivery-marker
+          key: ai-daily-delivered-${{ steps.report-date.outputs.date }}
+
       - name: Set up Python
+        if: github.event_name == 'workflow_dispatch' || steps.delivery-marker.outputs.cache-hit != 'true'
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           cache: pip
 
       - name: Install dependencies
+        if: github.event_name == 'workflow_dispatch' || steps.delivery-marker.outputs.cache-hit != 'true'
         run: pip install --no-cache-dir -r requirements-dev.txt
 
       - name: Run tests
+        if: github.event_name == 'workflow_dispatch' || steps.delivery-marker.outputs.cache-hit != 'true'
         run: python -m pytest -q
 
       - name: Generate and push AI daily report
+        if: github.event_name == 'workflow_dispatch' || steps.delivery-marker.outputs.cache-hit != 'true'
         env:
           AI_API_KEY: ${{ secrets.AI_API_KEY }}
           AI_BASE_URL: ${{ secrets.AI_BASE_URL }}
@@ -44,3 +63,21 @@ jobs:
           MAX_PER_SOURCE: "8"
           TOP_N: "7"
         run: python main.py
+
+      - name: Create delivery marker
+        if: success() && github.event_name == 'schedule' && steps.delivery-marker.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          mkdir -p .delivery-marker
+          printf '%s\n' "delivered_at=$(date -u +%FT%TZ)" > .delivery-marker/status.txt
+
+      - name: Save today's delivery marker
+        if: success() && github.event_name == 'schedule' && steps.delivery-marker.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .delivery-marker
+          key: ai-daily-delivered-${{ steps.report-date.outputs.date }}
+
+      - name: Report watchdog result
+        if: github.event_name == 'schedule' && steps.delivery-marker.outputs.cache-hit == 'true'
+        run: echo "Today's report was already delivered; watchdog skipped duplicate push."
