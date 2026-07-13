@@ -9,6 +9,7 @@ def test_dry_run_does_not_require_secrets(monkeypatch: pytest.MonkeyPatch) -> No
     settings = Settings.from_env(require_secrets=False)
     assert settings.lookback_hours == 48
     assert settings.top_n == 7
+    assert settings.pushplus_channel == "wechat"
 
 
 def test_normal_run_requires_secrets(monkeypatch: pytest.MonkeyPatch) -> None:
