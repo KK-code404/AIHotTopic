@@ -74,7 +74,7 @@ def markdown_to_chat_text(content: str) -> str:
 
 
 def push_to_wechat(
-    token: str, title: str, content: str, timeout: int, channel: str = "clawbot"
+    token: str, title: str, content: str, timeout: int, channel: str = "wechat"
 ) -> None:
     is_clawbot = channel == "clawbot"
     response = create_session().post(
