@@ -48,7 +48,7 @@ pytest -q
 | `AI_BASE_URL` | 否 | `https://api.openai.com/v1` | 兼容接口地址 |
 | `AI_MODEL` | 否 | `gpt-5.4-mini` | 日报总结模型 |
 | `PUSHPLUS_TOKEN` | 是 | - | PushPlus Token |
-| `PUSHPLUS_CHANNEL` | 否 | `clawbot` | PushPlus 渠道；好友式消息使用 `clawbot` |
+| `PUSHPLUS_CHANNEL` | 否 | `wechat` | 自动日报使用稳定的公众号通道；手动好友式测试可设为 `clawbot` |
 | `NEWS_LOOKBACK_HOURS` | 否 | `48` | 新闻时间窗口 |
 | `MAX_PER_SOURCE` | 否 | `8` | 每个源最多读取数 |
 | `TOP_N` | 否 | `7` | 日报目标条数 |
@@ -74,7 +74,7 @@ Harness YAML 的 `projectIdentifier`、`orgIdentifier`、代码库 `connectorRef
 
 `.github/workflows/daily.yml` 使用三次云端检查：北京时间 09:07 首次发送，09:27 和 09:47 作为看门狗补发。首次发送成功后会为当天保存 delivery marker，后续检查发现标记后自动跳过；如果任务未触发或中途失败，没有成功标记，下一次检查会重新发送。
 
-该机制确认的是 GitHub 工作流与 PushPlus API 请求成功。微信 ClawBot 的最终送达还要求会话处于激活状态：每 24 小时以及每收到 10 次推送后，需要主动向 ClawBot 发送一条消息。
+该机制确认的是 GitHub 工作流与 PushPlus API 请求成功。云端自动日报默认使用无需每日激活的 `wechat` 公众号通道；如手动改用 ClawBot，每 24 小时以及每收到 10 次推送后，需要主动向 ClawBot 发送一条消息。
 
 ## Docker
 
