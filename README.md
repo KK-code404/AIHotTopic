@@ -56,7 +56,7 @@ pytest -q
 
 新闻源在 `sources.json` 中维护。某个源失败不会阻止其他源继续处理。
 
-默认日报共 7 条，其中 Salesforce News 与 Salesforce Agentforce 合计占 1–2 条，其余 5–6 条来自其他综合 AI 新闻源。
+默认日报共 7 条：前面 5–6 条为综合 AI 热点，最后 1–2 条为 Salesforce News 或 Salesforce Agentforce。程序会自动重排并限制 Salesforce 最多 2 条。
 
 ## Harness 部署
 
