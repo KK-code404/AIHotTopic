@@ -58,7 +58,7 @@ jobs:
           AI_BASE_URL: ${{ secrets.AI_BASE_URL }}
           AI_MODEL: ${{ secrets.AI_MODEL }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
-          PUSHPLUS_CHANNEL: clawbot
+          PUSHPLUS_CHANNEL: wechat
           NEWS_LOOKBACK_HOURS: "48"
           MAX_PER_SOURCE: "8"
           TOP_N: "7"
