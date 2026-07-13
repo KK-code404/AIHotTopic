@@ -34,7 +34,7 @@ class Settings:
             base_url=os.getenv("AI_BASE_URL", "https://api.openai.com/v1").rstrip("/"),
             model=os.getenv("AI_MODEL", "gpt-5.4-mini"),
             pushplus_token=token,
-            pushplus_channel=os.getenv("PUSHPLUS_CHANNEL", "clawbot").strip() or "clawbot",
+            pushplus_channel=os.getenv("PUSHPLUS_CHANNEL", "wechat").strip() or "wechat",
             lookback_hours=_positive_int("NEWS_LOOKBACK_HOURS", 48),
             max_per_source=_positive_int("MAX_PER_SOURCE", 8),
             top_n=_positive_int("TOP_N", 7),
