@@ -39,7 +39,7 @@ pipeline:
                       AI_BASE_URL: <+secrets.getValue("ai_base_url")>
                       AI_MODEL: <+secrets.getValue("ai_model")>
                       PUSHPLUS_TOKEN: <+secrets.getValue("pushplus_token")>
-                      PUSHPLUS_CHANNEL: "clawbot"
+                      PUSHPLUS_CHANNEL: "wechat"
                       NEWS_LOOKBACK_HOURS: "48"
                       MAX_PER_SOURCE: "8"
                       TOP_N: "7"
